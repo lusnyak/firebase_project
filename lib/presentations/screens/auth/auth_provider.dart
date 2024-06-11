@@ -57,6 +57,10 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  Future<void> socialAuthAction() async {
+    await _fireRepo.signInViaGoogle();
+  }
+
   Future<void> authAction() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (isValid) {

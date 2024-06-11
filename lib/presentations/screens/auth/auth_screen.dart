@@ -60,8 +60,14 @@ class AuthScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: provider.authAction,
-                    child: const Text("Auth"),
-                  )
+                    child: const Text("Auth +"),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: provider.socialAuthAction,
+                    label: const Text("Google Sign In"),
+                    icon: const Icon(Icons.g_mobiledata),
+                  ),
                 ],
               ),
             );
