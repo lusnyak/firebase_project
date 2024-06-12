@@ -1,6 +1,7 @@
 import 'package:firebase_project/data/remote/firebase/firebase_repository.dart';
 import 'package:firebase_project/presentations/screens/auth/auth_provider.dart';
 import 'package:firebase_project/presentations/screens/map/map_screen.dart';
+import 'package:firebase_project/presentations/screens/users/users_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,14 @@ class ProfileScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: context.read<AuthProvider>().logout,
                   child: const Text("Logout"),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const UsersScreen()));
+                  },
+                  child: const Text("Users"),
                 ),
                 ElevatedButton(
                   onPressed: () {

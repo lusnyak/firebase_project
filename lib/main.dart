@@ -4,6 +4,7 @@ import 'package:firebase_project/data/remote/firebase/fcm_repository.dart';
 import 'package:firebase_project/presentations/screens/auth/auth_provider.dart';
 import 'package:firebase_project/presentations/screens/auth/auth_screen.dart';
 import 'package:firebase_project/presentations/screens/splash/splash_screen.dart';
+import 'package:firebase_project/presentations/screens/users/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +55,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => AuthProvider())
+      ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ChangeNotifierProvider(create: (_) => UsersProvider())
     ],
       child: MaterialApp(
         navigatorKey: navigationStateKey,
