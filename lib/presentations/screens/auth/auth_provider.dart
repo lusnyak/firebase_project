@@ -1,4 +1,6 @@
-import 'package:firebase_project/data/remote/firebase/firebase_repository.dart';
+import 'package:firebase_project/data/exceptions/my_exception.dart';
+import 'package:firebase_project/data/remote/auth_remote_impl.dart';
+import 'package:firebase_project/data/repository/auth_repository.dart';
 import 'package:firebase_project/main.dart';
 import 'package:firebase_project/presentations/screens/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../profile/profile_screen.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final _fireRepo = FireBaseRepo();
+  final _authRepo = AuthRepository(AuthRemoteImpl());
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -36,7 +38,7 @@ class AuthProvider extends ChangeNotifier {
 
   void checkLoggedUser() async {
     await Future.delayed(const Duration(seconds: 2), () {
-      final flag = FireBaseRepo().checkCurrentUser();
+      final flag = _authRepo.checkUserLogged();
       if (navigationStateKey.currentContext != null) {
         Navigator.of(navigationStateKey.currentContext!).pushReplacement(
           MaterialPageRoute(
@@ -48,7 +50,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    await _fireRepo.logout().whenComplete(() {
+    await _authRepo.logout().whenComplete(() {
       if (navigationStateKey.currentContext != null) {
         Navigator.of(navigationStateKey.currentContext!).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => const AuthScreen()),
@@ -58,7 +60,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> socialAuthAction() async {
-    await _fireRepo.signInViaGoogle();
+    // await _fireRepo.signInViaGoogle();
   }
 
   Future<void> authAction() async {
@@ -66,11 +68,11 @@ class AuthProvider extends ChangeNotifier {
     if (isValid) {
       // String message = _haveAccount ? "logged" : "registered";
       Future<bool?> authFuture = _haveAccount
-          ? _fireRepo.signInWithEmailAndPassword(
+          ? _authRepo.signInWithEmailAndPassword(
               email: _emailController.text,
               password: _passwordController.text,
             )
-          : _fireRepo.createUserWithEmailAndPassword(
+          : _authRepo.createUserWithEmailAndPassword(
               email: _emailController.text,
               password: _passwordController.text,
             );
